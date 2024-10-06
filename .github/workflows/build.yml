@@ -26,10 +26,10 @@ jobs:
           pip install pyinstaller
 
       - name: Build GUI executable
-        run: pyinstaller --onefile --windowed gui.py
+        run: pyinstaller --onefile --windowed gpsd-timesync-gui.py
 
       - name: Build CLI executable
-        run: pyinstaller --onefile cli.py
+        run: pyinstaller --onefile gpsd-timesync-cli.py
 
       - name: Archive build artifacts
         run: |
