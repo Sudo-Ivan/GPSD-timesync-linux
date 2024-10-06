@@ -23,13 +23,13 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pyinstaller
+          pip install pyinstaller PySide6
 
       - name: Build GUI executable
-        run: pyinstaller --onefile --windowed gpsd-timesync-gui.py
+        run: pyinstaller --onefile --windowed --hidden-import PySide6 --collect-all PySide6 gpsd-timesync-gui.py
 
       - name: Build CLI executable
-        run: pyinstaller --onefile gpsd-timesync-cli.py
+        run: pyinstaller --onefile --hidden-import PySide6 --collect-all PySide6 gpsd-timesync-cli.py
 
       - name: Archive build artifacts
         run: |
