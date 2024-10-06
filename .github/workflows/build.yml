@@ -34,8 +34,8 @@ jobs:
       - name: Archive build artifacts
         run: |
           mkdir -p ./artifacts
-          mv dist/gui ./artifacts/gui
-          mv dist/cli ./artifacts/cli
+          mv dist/gui ./artifacts/gpsd-timesync-gui
+          mv dist/cli ./artifacts/gpsd-timesync-cli
 
       - name: Upload to GitHub Releases
         uses: softprops/action-gh-release@v1
