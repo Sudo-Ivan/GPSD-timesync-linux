@@ -1,1 +1,1 @@
-# GPSd-timesync-linux
+# GPSD-timesync-linux
