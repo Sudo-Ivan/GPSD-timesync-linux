@@ -8,14 +8,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    permissions: write-all
+    permissions:
+      contents: write
+      releases: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
@@ -37,8 +39,8 @@ jobs:
           mv dist/cli ./artifacts/cli
 
       - name: Upload to GitHub Releases
-        uses: ncipollo/release-action@v1
+        uses: softprops/action-gh-release@v1
         with:
-          artifacts: ./artifacts/*
-          tag: ${{ github.ref }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          files: ./artifacts/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
