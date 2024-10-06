@@ -1,0 +1,42 @@
+name: Build and Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+
+      - name: Build GUI executable
+        run: pyinstaller --onefile --windowed gui.py
+
+      - name: Build CLI executable
+        run: pyinstaller --onefile cli.py
+
+      - name: Archive build artifacts
+        run: |
+          mkdir -p ./artifacts
+          mv dist/gui ./artifacts/gui
+          mv dist/cli ./artifacts/cli
+
+      - name: Upload to GitHub Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: ./artifacts/*
+          tag: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}

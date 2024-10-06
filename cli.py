@@ -1,5 +1,3 @@
-# cli.py
-
 import sys
 import json
 import socket
