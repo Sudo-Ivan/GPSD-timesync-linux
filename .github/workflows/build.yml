@@ -23,13 +23,19 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pyinstaller PySide6
+          pip install pyinstaller
+          pip install PySide6
 
       - name: Build GUI executable
-        run: pyinstaller --onefile --windowed --hidden-import PySide6 --collect-all PySide6 gpsd-timesync-gui.py
+        run: |
+          pyinstaller --onefile --windowed --name gpsd-timesync-gui \
+            --hidden-import PySide6.QtCore \
+            --hidden-import PySide6.QtWidgets \
+            --hidden-import PySide6.QtGui \
+            gpsd-timesync-gui.py
 
       - name: Build CLI executable
-        run: pyinstaller --onefile --hidden-import PySide6 --collect-all PySide6 gpsd-timesync-cli.py
+        run: pyinstaller --onefile --name gpsd-timesync-cli gpsd-timesync-cli.py
 
       - name: Archive build artifacts
         run: |
